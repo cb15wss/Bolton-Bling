@@ -106,11 +106,15 @@
                                 <li>Total <span>£ {{$total_price}}</span></li>
                             @endif
                         </ul>
-                        <div style="margin-left: 20px;"><a class="btn btn-default check_out" href="{{url('/check-out')}}">Continue</a></div>
+                        <div style="margin-left: 20px;">
+                        <a class="btn btn-default check_out" href="{{url('/check-out')}}">Continue</a></div>
 
-                        <div>
-                            <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+                        <div class="container">
+                        <div class="col-sm-6">
+                           <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
                             <script>paypal.Buttons().render('body');</script>
+                        </div>
+                         
                         </div>
                     </div>
                 </div>

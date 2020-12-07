@@ -9,8 +9,9 @@
     <div class="header-middle"><!--header-middle-->
         <div class="container">
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="logo pull-left" Bolton Bling><h1>BB Jewelery</h1></div>
+            <div class="col-sm-4">
+                <div class="logo pull-left">
+                        <a href="{{ url('/') }}" class="navbar pull-left"><img src="{{ asset('img/Bolton.png')}}" alt="Bolton Bling logo"></a></div>
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
