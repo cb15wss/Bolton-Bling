@@ -1,0 +1,111 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\ProductAtt_model;
+use App\Products;
+use Illuminate\Http\Request;
+
+class ProductAttrController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request,[
+            'sku'=>'required',
+            'size'=>'required',
+            'price'=>'required|numeric',
+            'stock'=>'required|numeric'
+        ]);
+        ProductAtt_model::create($request->all());
+        return back()->with('message','Attribute added');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $menu_active =3;
+        $attributes=ProductAtt_model::where('products_id',$id)->get();
+        $product=Products::findOrFail($id);
+        return view('backEnd.products.add_pro_atrr',compact('menu_active','product','attributes'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $menu_active =3;
+        $attributes=ProductAtt_model::where('products_id',$id)->get();
+        $product=Products::findOrFail($id);
+        return view('backEnd.products.add_pro_atrr',compact('menu_active','product','attributes'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request_data=$request->all();
+        foreach ($request_data['id'] as $key=>$attr){
+            $update_attr=ProductAtt_model::where([['products_id',$id],['id',$request_data['id'][$key]]])
+                ->update(['sku'=>$request_data['sku'][$key],'size'=>$request_data['size'][$key],'price'=>$request_data['price'][$key],
+                    'stock'=>$request_data['stock'][$key]]);
+        }
+        return back()->with('message','Update Attribute Success');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function deleteAttr($id){
+        $deleteAttr=ProductAtt_model::findOrFail($id);
+        $deleteAttr->delete();
+        return back()->with('message','Deleted Success!');
+    }
+}
